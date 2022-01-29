@@ -1,12 +1,13 @@
 {
   "name": "@szymmis/multipart",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "index.js",
   "repository": "git@github.com:szymmis/multipart",
   "author": "Szymon Miśtal <mistalzaq@gmail.com>",
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "yarn tsc"
