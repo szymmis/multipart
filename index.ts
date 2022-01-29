@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-export default function () {
+export = function () {
   return function (
     req: express.Request,
     res: express.Response,
@@ -124,4 +124,4 @@ export default function () {
       next();
     });
   };
-}
+};
