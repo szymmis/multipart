@@ -1,6 +1,6 @@
 {
   "name": "@szymmis/multipart",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "index.js",
   "repository": "git@github.com:szymmis/multipart",
   "author": "Szymon Miśtal <mistalzaq@gmail.com>",
@@ -22,5 +22,13 @@
     "typescript": "^4.5.5",
     "webpack": "^5.67.0",
     "webpack-cli": "^4.9.2"
-  }
+  },
+  "keywords": [
+    "simple",
+    "express",
+    "middleware",
+    "multipart",
+    "form-data",
+    "multipart/form-data"
+  ]
 }
