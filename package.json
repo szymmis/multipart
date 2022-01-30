@@ -10,7 +10,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "yarn tsc"
+    "build": "yarn webpack --mode production"
   },
   "dependencies": {
     "express": "^4.17.2"
