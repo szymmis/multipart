@@ -108,13 +108,13 @@ const { file } = req.files;
 console.log(file?.data.toString());
 ```
 
-We can as well save the file on a disk using `fs` node module and `saveFile` or `saveFileSync` methods
+We can as well save the file on a disk using `fs` node module and `writeFile` or `writeFileSync` methods
 
 ```js
 const fs = require("fs");
 //...
 app.post("/", (req, res) => {
-  fs.saveFileSync("./your_path.txt", req.files?.my_file.data);
+  fs.writeFileSync("my_file.txt", req.files?.my_file.data);
   res.end(); //always remember end the request in some way to avoid stalling it
 });
 ```
