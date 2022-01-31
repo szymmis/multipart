@@ -3,26 +3,32 @@
 ## Introduction
 
 This package is very simple parsing middleware for express. \
-It parses incoming formdata into `req.fields` and `req.files` objects
+It uses express build-in **`express.raw()`** middleware and parses incoming formdata into **`req.fields`** and **`req.files`** objects
 
 Why **this** package? Because it's very easy in use:
 
 - Install the package and import it
-- Use it as a middleware with `app.use()`
-- Your `fields` and `files` are ready to use in your routes `request` object
+- Use it as a middleware with **`app.use()`**
+- Your **`fields`** and **`files`** are ready to use in your routes `request` object
 - Works with **CommonJS** as well as **ESModules**!
 - Written in **TypeScript**, types included!
 
 ## Installation and usage
 
 - Install the package with\
-   `yarn add @szymmis/multipart` or `npm install @szymmis/multipart`
-- Import it into your app\
-  `const multipart = require("@szymmis/multipart")` or `import multipart from "@szymmis/multipart"`
-- And simply use your data
-
+   `yarn add @szymmis/multipart`\
+   or
+  `npm install @szymmis/multipart`
+- Import it into your app
 ```js
-//importing express, creating app object etc...
+// with CommonJS
+const multipart = require("@szymmis/multipart");
+// or with ESModules
+import multipart from "@szymmis/multipart"`
+```
+- And simply use your data
+```js
+// importing express, creating app object etc...
 //...
 const multipart = require("@szymmis/multipart");
 
@@ -32,12 +38,14 @@ app.post("/", (req, res) => {
   console.log(req.files); // All sent files from your files inputs
   console.log(req.fields); // All other fields from other inputs such as text,number,etc
 });
-```
+  ```
 
 ### ⚠️ **Note** ⚠️
 
-The `Content-Type` header of the request must be in form of `Content-Type: multipart/form-data; boundary=...` for this middleware to work. Such `Content-Type` is set automatically when
-you submit your **form** on the **front-end** or when you set the `body` of your fetch as a `FormData`
+The `Content-Type` header of the request must be in form of\
+`Content-Type: multipart/form-data; boundary=...` for this middleware to work.\
+Such `Content-Type` is set automatically when
+you submit your **form** on the **front-end** or when you set the `body` of your fetch as a **`FormData`**
 
 Example of **front-end** code for sending `FormData` over the fetch request
 
@@ -56,12 +64,12 @@ form.onsubmit = (e) => {
 ### req.fields `:Record<string, string>`
 
 All the basic fields are sent to the server in form of pairs of input_name=value
-and in such form are served to you. `req.fields` is a object of all the parsed simple
+and in such form are served to you. **`req.fields`** is a object of all the parsed simple
 fields.
 
 ```js
     console.log(req.fields)
-    //Example output:
+    // Example output:
     {
         name: "John",
         surname: "Doe",
