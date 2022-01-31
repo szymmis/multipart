@@ -1,5 +1,9 @@
 # Simple _`multipart/form-data`_ parser
 
+[![npm](https://img.shields.io/npm/v/@szymmis/multipart)](https://www.npmjs.org/package/@szymmis/multipart)
+[![downloads-per-week](https://img.shields.io/npm/dt/@szymmis/multipart?color=red)](https://www.npmjs.org/package/@szymmis/multipart)
+[![license](https://img.shields.io/npm/l/@szymmis/multipart?color=purple)](https://www.npmjs.org/package/@szymmis/multipart)
+
 ## Introduction
 
 This package is very simple parsing middleware for express. \
@@ -20,13 +24,16 @@ Why **this** package? Because it's very easy in use:
    or
   `npm install @szymmis/multipart`
 - Import it into your app
+
 ```js
 // with CommonJS
 const multipart = require("@szymmis/multipart");
 // or with ESModules
 import multipart from "@szymmis/multipart"`
 ```
+
 - And simply use your data
+
 ```js
 // importing express, creating app object etc...
 //...
@@ -38,7 +45,7 @@ app.post("/", (req, res) => {
   console.log(req.files); // All sent files from your files inputs
   console.log(req.fields); // All other fields from other inputs such as text,number,etc
 });
-  ```
+```
 
 ### ⚠️ **Note** ⚠️
 
@@ -129,7 +136,7 @@ app.post("/", (req, res) => {
 
 ## License
 
-This package is distributed under the [GNU General Public License Version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
+[MIT](https://github.com/szymmis/multipart/blob/master/LICENSE)
 
 ## Credits
 
