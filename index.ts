@@ -20,10 +20,13 @@ declare global {
   }
 }
 
-function isBoundary(boundary: string, buff: Buffer, index: number) {
+function isBoundary(boundary: number[], buff: Buffer, index: number) {
   if (index < boundary.length) return false;
-  const slice = buff.slice(index - boundary.length, index).toString();
-  return boundary === slice;
+  for (let i = 0; i < boundary.length; i++) {
+    if (boundary[boundary.length - (i + 1)] !== buff.readUInt8(index - i))
+      return false;
+  }
+  return true;
 }
 
 export = function (options?: MultipartOptions) {
@@ -40,7 +43,10 @@ export = function (options?: MultipartOptions) {
       req.fields = {};
       const contentType = req.headers?.["content-type"];
       if (contentType?.match(/multipart\/form-data/)) {
-        const boundary = contentType.replace(/.*boundary=([\w-]+)/, "$1");
+        const boundary = contentType
+          .replace(/.*boundary=([\w-]+)/, "$1")
+          .split("")
+          .map((letter) => letter.charCodeAt(0));
         //Container of all parsed files
         //Get raw-data parsed by express.raw() middleware in form of array of bytes called Buffer
         if (!(req?.body instanceof Buffer)) return next();
