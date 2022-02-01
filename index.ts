@@ -1,5 +1,9 @@
 import express from "express";
 
+interface MultipartOptions {
+  limit: `${number}${"kb" | "mb"}`;
+}
+
 interface FormDataFile {
   filename: string;
   extension: string;
@@ -22,13 +26,16 @@ function isBoundary(boundary: string, buff: Buffer, index: number) {
   return boundary === slice;
 }
 
-export = function () {
+export = function (options?: MultipartOptions) {
   return function (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) {
-    express.raw({ type: "multipart/form-data" })(req, res, () => {
+    express.raw({
+      type: "multipart/form-data",
+      limit: options?.limit ?? "10mb",
+    })(req, res, () => {
       req.files = {};
       req.fields = {};
       const contentType = req.headers?.["content-type"];

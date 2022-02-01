@@ -66,6 +66,20 @@ form.onsubmit = (e) => {
 };
 ```
 
+## Options
+
+You can specify options when you tell express to use this middleware
+```js
+  app.use(multipart({ /*Your options go here */ }));
+  // example
+  app.use(multipart({ limit: "50mb" }))
+```
+For now there is only one option available:
+| *name* | *description* | *default* | *valid values* | *example value* |
+| ---- | ----------- | ------- | ------------ | ----- |
+| *limit* | Controls how big your payload can be in size | `"10mb"` | `"{number}kb/mb"` | `"50mb"`
+
+### *ℹ️ All options are optional and have default values*
 ## Documentation
 
 ### req.fields `:Record<string, string>`
