@@ -13,16 +13,16 @@ Why **this** package? Because it's very easy in use:
 
 - Install the package and import it
 - Use it as a middleware with **`app.use()`**
-- Your **`fields`** and **`files`** are ready to use in your routes `request` object
+- Your **`fields`** and **`files`** are ready to use in your routes *`request`* object
 - Works with **CommonJS** as well as **ESModules**!
 - Written in **TypeScript**, types included!
 
 ## Installation and usage
 
 - Install the package with\
-   `yarn add @szymmis/multipart`\
+   ***`yarn add @szymmis/multipart`***\
    or
-  `npm install @szymmis/multipart`
+  *`npm install @szymmis/multipart`*
 - Import it into your app
 
 ```js
@@ -49,12 +49,12 @@ app.post("/", (req, res) => {
 
 ### ⚠️ **Note** ⚠️
 
-The `Content-Type` header of the request must be in form of\
-`Content-Type: multipart/form-data; boundary=...` for this middleware to work.\
-Such `Content-Type` is set automatically when
-you submit your **form** on the **front-end** or when you set the `body` of your fetch as a **`FormData`**
+The **`Content-Type`** header of the request must be in form of\
+**`Content-Type: multipart/form-data; boundary=...`** for this middleware to work.\
+Such *`Content-Type`* is set automatically when
+you submit your **form** on the **front-end** or when you set the *`body`* of your fetch as a **`FormData`**
 
-Example of **front-end** code for sending `FormData` over the fetch request
+Example of **front-end** code for sending *`FormData`* over the fetch request
 
 ```js
 const form = document.querySelector("#form-id");
@@ -94,6 +94,8 @@ Example of such file object, where invoice is the name of the **form field** tha
 this file was sent from
 
 ```js
+    console.log(req.files)
+    // Example output:
     {
         invoice: {
             filename: "my_invoice.pdf",
@@ -105,18 +107,18 @@ this file was sent from
 ```
 
 And each file is an object of type **`FormDataFile`** \
-It holds all the needed information about the sent file such as: `filename`, `extension`, `type` and of course raw `data`
+It holds all the needed information about the sent file such as: *`filename`*, *`extension`*, *`type`* and of course raw *`data`*
 
 ```js
 interface FormDataFile {
-  filename: string; //uplodaed file name (ex: "logs.txt")
-  extension: string; //uploaded file extension (ex: "txt")
-  type: string; //uploaded file type as in MIME Type (ex: "text/plain")
-  data: Buffer; //Node.js byte data buffer
+  filename: string; // uplodaed file name (ex: "logs.txt")
+  extension: string; // uploaded file extension (ex: "txt")
+  type: string; // uploaded file type as in MIME Type (ex: "text/plain")
+  data: Buffer; // Node.js byte data buffer
 }
 ```
 
-To see the contents of a file in form of a string, when for example sent file was a simple `.txt` file we can just stringify the `data` field
+To see the contents of a file in form of a string, when for example sent file was a simple *`.txt`* file we can just stringify the *`data`* field
 
 ```js
 const { file } = req.files;
@@ -130,7 +132,7 @@ const fs = require("fs");
 //...
 app.post("/", (req, res) => {
   fs.writeFileSync("my_file.txt", req.files?.my_file.data);
-  res.end(); //always remember end the request in some way to avoid stalling it
+  res.end(); // always remember to end the request in some way to avoid stalling it
 });
 ```
 
