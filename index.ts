@@ -33,7 +33,7 @@ export = function (options?: MultipartOptions) {
   return function (
     req: express.Request,
     res: express.Response,
-    next: express.NextFunction
+    next: express.NextFunction,
   ) {
     express.raw({
       type: "multipart/form-data",
@@ -60,14 +60,14 @@ export = function (options?: MultipartOptions) {
         //We cycle through every byte of data
         buff.forEach((e, i) => {
           //If the char is \n
-          if (e == 10) {
+          if (e === 10) {
             //We check if we've just encountered another \n before
             //we do that because in the raw data file when the data starts we have double \r\n right before it
-            if (buff.readUInt8(i - 2) == 10) {
+            if (buff.readUInt8(i - 2) === 10) {
               //We want only the first encounter of \r\n to save, becouse the data itself can have this combination of values
               //so we dont wan't to mess it up by taking wrong header ending index
-              if (beginIndex != 0) {
-                if (endIndex == 0) {
+              if (beginIndex !== 0) {
+                if (endIndex === 0) {
                   endIndex = i;
                 }
               }
@@ -95,24 +95,23 @@ export = function (options?: MultipartOptions) {
                   ? contentDisposition[3]
                   : undefined;
                 //Extranct the extension
-                const extension =
-                  filename && filename.includes(".")
-                    ? filename.slice(
-                        filename.lastIndexOf(".") + 1,
-                        filename.length
-                      )
-                    : "";
+                const extension = filename?.includes(".")
+                  ? filename.slice(
+                      filename.lastIndexOf(".") + 1,
+                      filename.length,
+                    )
+                  : "";
                 //Content-Type that the file was send with
                 const type =
                   meta.length > 1 ? meta[1].split(":")[1].trim() : "";
 
                 const data = buff.slice(
                   endIndex + 1,
-                  i - boundary.length - "--".length
+                  i - boundary.length - "--".length,
                 );
 
                 //Push the file to the object
-                if (filename != undefined) {
+                if (filename !== undefined) {
                   req.files[name] = {
                     filename,
                     extension,
