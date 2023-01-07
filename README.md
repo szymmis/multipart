@@ -1,8 +1,8 @@
 # Simple _`multipart/form-data`_ parser
 
-[![npm](https://img.shields.io/npm/v/@szymmis/multipart)](https://www.npmjs.org/package/@szymmis/multipart)
-[![downloads-per-week](https://img.shields.io/npm/dt/@szymmis/multipart?color=red)](https://www.npmjs.org/package/@szymmis/multipart)
-[![license](https://img.shields.io/npm/l/@szymmis/multipart?color=purple)](https://www.npmjs.org/package/@szymmis/multipart)
+[![bundle-size](https://img.shields.io/bundlephobia/minzip/vite-express)](https://www.npmjs.org/package/vite-express)
+[![downloads-per-week](https://img.shields.io/npm/dt/@szymmis/multipart?color=success)](https://www.npmjs.org/package/@szymmis/multipart)
+[![npm](https://img.shields.io/npm/v/@szymmis/multipart?color=purple)](https://www.npmjs.org/package/@szymmis/multipart)
 
 ## Introduction
 
