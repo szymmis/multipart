@@ -107,7 +107,7 @@ export default function (options?: MultipartOptions) {
 
                 const data = buff.slice(
                   endIndex + 1,
-                  i - boundary.length - "--".length,
+                  i - boundary.length - "--".length - 1,
                 );
 
                 //Push the file to the object
