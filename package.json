@@ -38,8 +38,10 @@
     "simple",
     "express",
     "middleware",
+    "parser",
     "multipart",
     "form-data",
-    "multipart/form-data"
+    "multipart/form-data",
+    "formdata"
   ]
 }
