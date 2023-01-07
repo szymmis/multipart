@@ -1,50 +1,86 @@
-# Simple _`multipart/form-data`_ parser
+# ⚙️ @szymmis/multipart
+
+> multipart/form-data parsing middleware for @expressjs
 
 [![bundle-size](https://img.shields.io/bundlephobia/minzip/vite-express)](https://www.npmjs.org/package/vite-express)
 [![downloads-per-week](https://img.shields.io/npm/dt/@szymmis/multipart?color=success)](https://www.npmjs.org/package/@szymmis/multipart)
 [![npm](https://img.shields.io/npm/v/@szymmis/multipart?color=purple)](https://www.npmjs.org/package/@szymmis/multipart)
 
-## Introduction
+## ✨ Key features
 
-This package is very simple parsing middleware for express. \
-It uses express build-in **`express.raw()`** middleware and parses incoming formdata into **`req.fields`** and **`req.files`** objects
+- Written entirerly in **TypeScript** so typings included
+- Works with **CommonJS** and **ESModules** import syntax
+- Tests covering all use-cases
+- `express` is **the only** run-time dependencies
+- Only **~1kB** in size when gzipped
 
-Why **this** package? Because it's very easy in use:
+## 💬 Introduction
 
-- Install the package and import it
-- Use it as a middleware with **`app.use()`**
-- Your **`fields`** and **`files`** are ready to use in your routes *`request`* object
-- Works with **CommonJS** as well as **ESModules**!
-- Written in **TypeScript**, types included!
+You shouldn't have to spend half a day configuring and going through docs when all you want to do is to handle files received on request. That's why with `@szymmis/multipart` all you have to write is:
 
-## Installation and usage
+```ts
+//server.ts
+import express from "express";
+import multipart from "@szymmis/multipart"
 
-- Install the package with\
-   ***`yarn add @szymmis/multipart`***\
-   or
-  *`npm install @szymmis/multipart`*
-- Import it into your app
-
-```js
-// with CommonJS
-const multipart = require("@szymmis/multipart");
-// or with ESModules
-import multipart from "@szymmis/multipart"`
-```
-
-- And simply use your data
-
-```js
-// importing express, creating app object etc...
-//...
-const multipart = require("@szymmis/multipart");
-
+const app = express();
 app.use(multipart());
 
-app.post("/", (req, res) => {
-  console.log(req.files); // All sent files from your files inputs
-  console.log(req.fields); // All other fields from other inputs such as text,number,etc
-});
+app.post("/upload", (req, res) => {
+  console.log(req.fields);
+  console.log(req.files);
+})
+```
+
+We are only parsing requests with `Content-Type` header set to `multipart/form-data`. The only internal dependency is the `express.raw()` middldeware for parsing body into raw data.
+
+## 📦 Installation and usage
+
+- Install the package with your favourite package manager\
+   ***`yarn add @szymmis/multipart`***\
+  *`npm install @szymmis/multipart`*
+
+- Import and register as a middleware
+
+```ts
+//server.ts
+import express from "express";
+import multipart from "@szymmis/multipart"
+
+const app = express();
+app.use(multipart());
+```
+
+- Use request object populated with **fields** and **files**
+
+```ts
+//server.ts
+import express from "express";
+import multipart from "@szymmis/multipart"
+
+const app = express();
+app.use(multipart());
+
+app.post("/upload", (req, res) => {
+  console.log(req.fields);
+  //Example output:
+  {
+    name: "Jogn",
+    surname: "Doe",
+    age: "32"
+  }
+
+  console.log(req.files);
+  //Example output:
+  {
+    file: {
+      filename: "file.txt",
+      extension: "txt",
+      type: "text/plain"
+      data: <Buffer ...>
+    }
+  }
+})
 ```
 
 ### ⚠️ **Note** ⚠️
@@ -52,41 +88,42 @@ app.post("/", (req, res) => {
 The **`Content-Type`** header of the request must be in form of\
 **`Content-Type: multipart/form-data; boundary=...`** for this middleware to work.\
 Such *`Content-Type`* is set automatically when
-you submit your **form** on the **front-end** or when you set the *`body`* of your fetch as a **`FormData`**
+you submit your **form** on the **front-end** or when you set the *`body`* of your request as a [**`FormData`**](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 
 Example of **front-end** code for sending *`FormData`* over the fetch request
 
 ```js
 const form = document.querySelector("#form-id");
 form.onsubmit = (e) => {
-  e.preventDefault(); // prevent form from reloading the page on submitting
+  e.preventDefault(); // prevent page reload on submit
   const fd = new FormData(form);
-  fetch("http://localhost:3000", { body: fd, method: "POST" });
-  // remember that FormData needs to be sent over the POST request!
+  fetch("http://localhost:3000/upload", { method: "POST", body: fd });
 };
 ```
 
-## Options
+Remember that FormData needs to be sent over POST request
 
-You can specify options when you tell express to use this middleware
+## 🔧 Options
+
+You can specify options object when registering the middleware
+
 ```js
   app.use(multipart({ /*Your options go here */ }));
-  // example
+  // e.g.
   app.use(multipart({ limit: "50mb" }))
 ```
-For now there is only one option available:
+
+### Available options
+
 | *name* | *description* | *default* | *valid values* | *example value* |
 | ---- | ----------- | ------- | ------------ | ----- |
-| *limit* | Controls how big your payload can be in size | `"10mb"` | `"{number}kb/mb"` | `"50mb"`
+| limit | Maximum payload size | `"10mb"` | `"{number}kb/mb"` | `"50mb"`
 
-### *ℹ️ All options are optional and have default values*
-## Documentation
+## 📝 Documentation
 
-### req.fields `:Record<string, string>`
+### req.fields`:Record<string, string>`
 
-All the basic fields are sent to the server in form of pairs of input_name=value
-and in such form are served to you. **`req.fields`** is a object of all the parsed simple
-fields.
+An object containing all non-file form fields values from inputs of type text, number, etc.
 
 ```js
     console.log(req.fields)
@@ -94,18 +131,13 @@ fields.
     {
         name: "John",
         surname: "Doe",
-        age: "23"
+        age: "32"
     }
 ```
 
-From above example we can deduce that the form had three fields with the
-names: `name`, `surname` and `age`
-
 ### req.files `:Record<string, FormDataFile>`
 
-All sent files are available in this object in form of pairs `input_name: FormDataFile`\
-Example of such file object, where invoice is the name of the **form field** that
-this file was sent from
+A dictionary of all the file form fields in form
 
 ```js
     console.log(req.files)
@@ -120,41 +152,46 @@ this file was sent from
     }
 ```
 
-And each file is an object of type **`FormDataFile`** \
-It holds all the needed information about the sent file such as: *`filename`*, *`extension`*, *`type`* and of course raw *`data`*
+Each file is an object of type **`FormDataFile`** \
+It holds all the needed information about the sent file:
 
-```js
+- filename
+- extension
+- type - [MIME](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types) type
+- data - Node.js [Buffer](https://nodejs.org/api/buffer.html) containg raw data
+
+```ts
 interface FormDataFile {
-  filename: string; // uplodaed file name (ex: "logs.txt")
-  extension: string; // uploaded file extension (ex: "txt")
-  type: string; // uploaded file type as in MIME Type (ex: "text/plain")
-  data: Buffer; // Node.js byte data buffer
+  filename: string; // (e.g. "logs.txt")
+  extension: string; // (e.g. "txt")
+  type: string; // (e.g. "text/plain")
+  data: Buffer; // (e.g. <Buffer ...>)
 }
 ```
 
-To see the contents of a file in form of a string, when for example sent file was a simple *`.txt`* file we can just stringify the *`data`* field
+When incoming file was in text form you can easily transform it into string using `Buffer.toString()`
 
-```js
+```ts
 const { file } = req.files;
 console.log(file?.data.toString());
 ```
 
-We can as well save the file on a disk using `fs` node module and `writeFile` or `writeFileSync` methods
+You can also easily save the file on a disk using `fs` node module and `writeFile` or `writeFileSync` methods
 
-```js
+```ts
 const fs = require("fs");
 //...
 app.post("/", (req, res) => {
-  fs.writeFileSync("my_file.txt", req.files?.my_file.data);
-  res.end(); // always remember to end the request in some way to avoid stalling it
+  fs.writeFileSync("my_file.txt", req.files.my_file.data);
+  //...do anything else
 });
 ```
 
-## License
+## 🏦 License
 
 [MIT](https://github.com/szymmis/multipart/blob/master/LICENSE)
 
-## Credits
+## 🖥️ Credits
 
 All credits to me
 [@szymmis](https://github.com/szymmis)
