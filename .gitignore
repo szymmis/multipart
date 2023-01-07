@@ -1,5 +1,2 @@
 node_modules
-*.d.ts
-*.js
-!webpack.config.js
-yarn.lock
+dist

@@ -29,7 +29,7 @@ function isBoundary(boundary: number[], buff: Buffer, index: number) {
   return true;
 }
 
-export = function (options?: MultipartOptions) {
+export default function (options?: MultipartOptions) {
   return function (
     req: express.Request,
     res: express.Response,
@@ -136,4 +136,4 @@ export = function (options?: MultipartOptions) {
       next();
     });
   };
-};
+}
