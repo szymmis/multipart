@@ -41,7 +41,7 @@ export default function (options?: MultipartOptions) {
     })(req, res, () => {
       req.files = {};
       req.fields = {};
-      const contentType = req.headers?.["content-type"];
+      const contentType = req.headers["content-type"];
       if (contentType?.match(/multipart\/form-data/)) {
         const boundary = contentType
           .replace(/.*boundary=([\w-]+)/, "$1")
@@ -49,7 +49,7 @@ export default function (options?: MultipartOptions) {
           .map((letter) => letter.charCodeAt(0));
         //Container of all parsed files
         //Get raw-data parsed by express.raw() middleware in form of array of bytes called Buffer
-        if (!(req?.body instanceof Buffer)) return next();
+        if (!(req.body instanceof Buffer)) return next();
         const buff: Buffer = req.body;
 
         //This variable will contain buffer offset where the file starts beginning from Webkit...
