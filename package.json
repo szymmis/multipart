@@ -1,7 +1,7 @@
 {
   "name": "@szymmis/multipart",
   "description": "Simple lightweight multipart/form-data express middleware",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "repository": "git@github.com:szymmis/multipart",
   "author": "Szymon Miśtal <mistalzaq@gmail.com>",
   "license": "MIT",
