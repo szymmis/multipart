@@ -13,7 +13,8 @@
   "scripts": {
     "build": "yarn rollup -c --configPlugin typescript",
     "postbuild": "rome format dist --write",
-    "test": "jest"
+    "test": "jest",
+    "bump": "npm version -m 'Release npm package `v%s`'"
   },
   "peerDependencies": {
     "express": "^4.17.2"
