@@ -6,7 +6,12 @@
 [![downloads-per-week](https://img.shields.io/npm/dt/@szymmis/multipart?color=success)][npm-link]
 [![npm](https://img.shields.io/npm/v/@szymmis/multipart?color=purple)][npm-link]
 
-## ✨ Key features
+- [💬 Introduction](#-introduction)
+- [📦 Installation and usage](#-installation-and-usage)
+- [🔧 Options](#-options)
+- [📝 Documentation](#-documentation)
+
+## ✨ Key features <!-- omit in toc -->
 
 - Written in **TypeScript**
 - Works with **CommonJS** and **ESModules** import syntax
@@ -197,11 +202,11 @@ app.post("/", (req, res) => {
 });
 ```
 
-## 🏦 License
+## 🏦 License <!-- omit in toc -->
 
 [MIT](https://github.com/szymmis/multipart/blob/master/LICENSE)
 
-## 🖥️ Credits
+## 🖥️ Credits <!-- omit in toc -->
 
 [@szymmis](https://github.com/szymmis)
 
