@@ -92,12 +92,9 @@ app.post("/upload", (req, res) => {
 
 ### ⚠️ **Note** ⚠️
 
-The **`Content-Type`** header of the request must be in form of\
-**`Content-Type: multipart/form-data; boundary=...`** for this middleware to work.\
-Such _`Content-Type`_ is set automatically when
-you submit your **form** on the **front-end** or when you set the _`body`_ of your request as a [**`FormData`**][form-data]
+The `Content-Type` header of the request must be in form of `multipart/form-data; boundary=...` for this middleware to work. It's set automatically when you **submit form** on the client-side or when you **set the body** of your request as a [`FormData`][form-data]
 
-Example of **front-end** code for sending _`FormData`_ over the fetch request
+Working client-side fetch example
 
 ```js
 const form = document.querySelector("#form-id");
@@ -134,7 +131,7 @@ app.use(multipart({ limit: "50mb" }));
 
 ### `req.fields: Record<string, string>`
 
-An object containing all non-file form fields values from inputs of type text, number, etc.
+A dictionary of all non-file form fields in form of field name - value pairs.
 
 ```js
     console.log(req.fields)
