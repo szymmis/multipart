@@ -199,7 +199,7 @@ app.post("/", (req, res) => {
 });
 ```
 
-## 🏦 License <!-- omit in toc -->
+## ⚖️ License <!-- omit in toc -->
 
 [MIT](https://github.com/szymmis/multipart/blob/master/LICENSE)
 
